@@ -41,6 +41,10 @@ app.use(xss());
 // mountRoutes(app);
 app.use("/api/v1/auth", authRoute);
 
+app.get("/", (req, res) => {
+  res.send("Server is working!");
+});
+
 app.all("*", (req, res, next) => {
   // create error and send it to error handling middleware
   // const err = new Error(`Can't find this route: ${req.originalUrl}`);
@@ -53,7 +57,7 @@ app.use(glabalError);
 
 const PORT = process.env.PORT || 8000;
 
-const server = app.listen(8000, () => {
+const server = app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
 });
 
