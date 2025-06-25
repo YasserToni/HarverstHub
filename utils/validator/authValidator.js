@@ -3,11 +3,17 @@ const userModel = require("../../model/userModel");
 const validatorMiddleware = require("../../middlewares/validatorMiddleware");
 
 exports.signValidator = [
-  check("name")
+  check("firstName")
     .notEmpty()
-    .withMessage("name required")
+    .withMessage("firstName required")
     .isLength({ min: 3 })
-    .withMessage("Too short name"),
+    .withMessage("Too short firstName"),
+
+  check("lastName")
+    .notEmpty()
+    .withMessage("lastName required")
+    .isLength({ min: 3 })
+    .withMessage("Too short lastName"),
 
   check("email")
     .notEmpty()
@@ -36,6 +42,17 @@ exports.signValidator = [
   check("passwordConfirm")
     .notEmpty()
     .withMessage("Please enter your confirm password"),
+
+  check("phone")
+    .notEmpty()
+    .withMessage("Phone number is required")
+    .isMobilePhone(["ar-EG"])
+    .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
+
+  check("secondPhone")
+    .optional()
+    .isMobilePhone(["ar-EG"])
+    .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
 
   validatorMiddleware,
 ];

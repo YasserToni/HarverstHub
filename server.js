@@ -11,6 +11,11 @@ const dbConnection = require("./config/dbconnection");
 
 // Routes
 const authRoute = require("./routes/authRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const subCategoryRoute = require("./routes/subCategoryRoute");
+const brandRoute = require("./routes/brandRoute");
+const productRoute = require("./routes/productRoute");
+const reviewRoute = require("./routes/reviewRoute");
 
 // const mountRoutes = require("./routes/index");
 const ApiError = require("./utils/apiError");
@@ -40,6 +45,11 @@ app.use(xss());
 // Routes
 // mountRoutes(app);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/category", categoryRoute);
+app.use("/api/v1/subcategory", subCategoryRoute);
+app.use("/api/v1/brand", brandRoute);
+app.use("/api/v1/product", productRoute);
+app.use("/api/v1/review", reviewRoute);
 
 app.get("/", (req, res) => {
   res.send("Server is working!");

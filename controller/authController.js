@@ -11,9 +11,12 @@ const { sanitizeUser } = require("../utils/sanitizData");
 exports.singup = asyncHandler(async (req, res, next) => {
   // create a new user
   const user = await userModel.create({
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
+    address: req.body.address,
+    secondPhone: req.body.secondPhone,
   });
 
   // create token
