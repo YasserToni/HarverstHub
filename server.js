@@ -16,6 +16,9 @@ const subCategoryRoute = require("./routes/subCategoryRoute");
 const brandRoute = require("./routes/brandRoute");
 const productRoute = require("./routes/productRoute");
 const reviewRoute = require("./routes/reviewRoute");
+const coupons = require("./routes/couponRoute");
+const wishListRoute = require("./routes/wishListRoute");
+const addressesRoute = require("./routes/addressRoute");
 
 // const mountRoutes = require("./routes/index");
 const ApiError = require("./utils/apiError");
@@ -50,6 +53,9 @@ app.use("/api/v1/subcategory", subCategoryRoute);
 app.use("/api/v1/brand", brandRoute);
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/review", reviewRoute);
+app.use("/api/v1/coupons", coupons);
+app.use("/api/v1/wishlist", wishListRoute);
+app.use("/api/v1/addresses", addressesRoute);
 
 app.get("/", (req, res) => {
   res.send("Server is working!");
