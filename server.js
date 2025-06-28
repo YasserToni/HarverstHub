@@ -19,6 +19,8 @@ const reviewRoute = require("./routes/reviewRoute");
 const coupons = require("./routes/couponRoute");
 const wishListRoute = require("./routes/wishListRoute");
 const addressesRoute = require("./routes/addressRoute");
+const auctionRoute = require("./routes/auctionRoute");
+const blogRoute = require("./routes/blogRoute");
 
 // const mountRoutes = require("./routes/index");
 const ApiError = require("./utils/apiError");
@@ -56,6 +58,8 @@ app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/coupons", coupons);
 app.use("/api/v1/wishlist", wishListRoute);
 app.use("/api/v1/addresses", addressesRoute);
+app.use("/api/v1/auctions", auctionRoute);
+app.use("/api/v1/blogs", blogRoute);
 
 app.get("/", (req, res) => {
   res.send("Server is working!");

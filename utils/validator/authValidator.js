@@ -43,16 +43,16 @@ exports.signValidator = [
     .notEmpty()
     .withMessage("Please enter your confirm password"),
 
-  check("phone")
-    .notEmpty()
-    .withMessage("Phone number is required")
-    .isMobilePhone(["ar-EG"])
-    .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
+  // check("phone")
+  //   .notEmpty()
+  //   .withMessage("Phone number is required")
+  //   .isMobilePhone(["ar-EG"])
+  //   .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
 
-  check("secondPhone")
-    .optional()
-    .isMobilePhone(["ar-EG"])
-    .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
+  // check("secondPhone")
+  //   .optional()
+  //   .isMobilePhone(["ar-EG"])
+  //   .withMessage("Invalid phone mumber only accepted Egy Phone nuumbers"),
 
   validatorMiddleware,
 ];

@@ -15,8 +15,6 @@ exports.singup = asyncHandler(async (req, res, next) => {
     lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
-    address: req.body.address,
-    secondPhone: req.body.secondPhone,
   });
 
   // create token
