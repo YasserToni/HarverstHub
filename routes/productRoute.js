@@ -1,57 +1,97 @@
 const express = require("express");
-const reviewRoute = require("./reviewRoute");
-
 const {
-  getProductValidator,
   createProductValidator,
+  approveProductValidator,
+  getProductValidator,
   updateProductValidator,
   deleteProductValidator,
 } = require("../utils/validator/productValidator");
 const {
-  getProducts,
   createProduct,
+  approveProduct,
+  getAllProducts,
   getProduct,
   updateProduct,
   deleteProduct,
+  getNotApprovedProducts,
+  getMerchantProducts,
 } = require("../controller/productController");
-const upload = require("../middlewares/upload");
 const authController = require("../controller/authController");
+const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-// post /products/(id > asdhfklsjdf)/reviews   go to review route
-router.use("/:productId/review", reviewRoute);
+// Create product
+router.post(
+  "/",
+  authController.protect,
+  authController.allowedTo("merchant"),
+  upload.fields([
+    { name: "imageCover", maxCount: 1 },
+    { name: "images", maxCount: 5 },
+  ]),
+  createProductValidator,
+  createProduct
+);
 
-// get all products
-// create product
-router
-  .route("/")
-  .get(getProducts)
-  .post(
-    authController.protect,
-    authController.allowedTo("admin"),
-    upload.fields([
-      { name: "imageCover", maxCount: 1 },
-      { name: "images", maxCount: 5 }, // up to 5 sub-images
-    ]),
-    createProductValidator,
-    createProduct
-  );
+router.patch(
+  "/approve/:id",
+  authController.protect,
+  authController.allowedTo("admin"),
+  approveProductValidator,
+  approveProduct
+);
 
-// get product by ids
 router
-  .route("/:id")
-  .get(getProductValidator, getProduct)
-  .put(
+  .get(
+    "/",
     authController.protect,
-    authController.allowedTo("admin", "manager"),
-    updateProductValidator,
-    updateProduct
+    authController.allowedTo("user"),
+    getAllProducts
   )
-  .delete(
+  .get(
+    "/:id",
+    authController.protect,
+    authController.allowedTo("user"),
+    getProductValidator,
+    getProduct
+  )
+  .get(
+    "/notapproved/not-approved",
     authController.protect,
     authController.allowedTo("admin"),
-    deleteProductValidator,
-    deleteProduct
+    getNotApprovedProducts
+  )
+  .get(
+    "/my-products/my-products",
+    authController.protect,
+    authController.allowedTo("merchant"),
+    getMerchantProducts
   );
+
+router.put(
+  "/:id",
+  authController.protect,
+  authController.allowedTo("merchant"),
+  upload.fields([
+    { name: "imageCover", maxCount: 1 },
+    { name: "images", maxCount: 5 },
+  ]),
+  updateProductValidator,
+  updateProduct
+);
+
+router.delete(
+  "/:id",
+  authController.protect,
+  authController.allowedTo("merchant"),
+  deleteProductValidator,
+  deleteProduct
+);
+
+//admin can get all product not approved
+
+// router.get("/not-approved", (req, res) => {
+//   res.send("Route works without any middleware");
+// });
 module.exports = router;

@@ -9,6 +9,11 @@ const productSchema = new mongoose.Schema(
       minLength: [2, "Too Short Product title"],
       maxLength: [100, "Too long Product title"],
     },
+    slug: {
+      type: String,
+      required: [true, "Product must have a slug"],
+      lowercase: true,
+    },
     description: {
       type: String,
       required: [true, "Product description is required"],
@@ -46,17 +51,12 @@ const productSchema = new mongoose.Schema(
     subcategory: {
       type: mongoose.Schema.ObjectId,
       ref: "SubCategory",
+      // required: [true, "Product must belong to a subcategory"],
     },
     brand: {
       type: mongoose.Schema.ObjectId,
       ref: "Brand",
     },
-    specifications: [
-      {
-        key: { type: String, required: true },
-        value: { type: String, required: true },
-      },
-    ],
     ratingsAverage: {
       type: Number,
       min: [1, "Rating must be above or equal 1.0"],
@@ -66,23 +66,13 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    merchant: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-      required: [true, "Product must belong to a merchant"],
-    },
-    approved: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+    toObject: { virtuals: true }, // So `console.log()` and other functions that use `toObject()` include vir
   }
 );
-
 productSchema.virtual("reviews", {
   ref: "Review",
   foreignField: "product",
